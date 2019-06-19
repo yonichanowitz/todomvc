@@ -121,8 +121,8 @@ jQuery(function ($) {
 		},
 		// accepts an element from inside the `.item` div and
 		// returns the corresponding index in the `todos` array
-		getIndexFromEl: function (el) {
-			var id = $(el).closest('li').data('id');
+		getIndexFromElement: function (element) {
+			var id = $(element).closest('li').data('id');
 			var todos = this.todos;
 			var i = todos.length;
 
@@ -132,11 +132,11 @@ jQuery(function ($) {
 				}
 			}
 		},
-		create: function (e) {
-			var $input = $(e.target);
+		create: function (event) {
+			var $input = $(event.target);
 			var val = $input.val().trim();
 
-			if (e.which !== ENTER_KEY || !val) {
+			if (event.which !== ENTER_KEY || !val) {
 				return;
 			}
 
@@ -150,45 +150,45 @@ jQuery(function ($) {
 
 			this.render();
 		},
-		toggle: function (e) {
-			var i = this.getIndexFromEl(e.target);
+		toggle: function (event) {
+			var i = this.getIndexFromElement(event.target);
 			this.todos[i].completed = !this.todos[i].completed;
 			this.render();
 		},
-		editingMode: function (e) {
-			var $input = $(e.target).closest('li').addClass('editing').find('.edit');
+		editingMode: function (event) {
+			var $input = $(event.target).closest('li').addClass('editing').find('.edit');
 			var val = $input.val();
 			$input.val('').focus().val(val);
 		},
-		editKeyup: function (e) {
-			if (e.which === ENTER_KEY) {
-				e.target.blur();
+		editKeyup: function (event) {
+			if (event.which === ENTER_KEY) {
+				event.target.blur();
 			}
 
-			if (e.which === ESCAPE_KEY) {
-				$(e.target).data('abort', true).blur();
+			if (event.which === ESCAPE_KEY) {
+				$(event.target).data('abort', true).blur();
 			}
 		},
-		update: function (e) {
-			var el = e.target;
-			var $el = $(el);
-			var val = $el.val().trim();
+		update: function (event) {
+			var element = event.target;
+			var $element = $(element);
+			var val = $element.val().trim();
 
 			if (!val) {
-				this.destroy(e);
+				this.destroy(event);
 				return;
 			}
 
-			if ($el.data('abort')) {
-				$el.data('abort', false);
+			if ($ellement.data('abort')) {
+				$ellement.data('abort', false);
 			} else {
-				this.todos[this.getIndexFromEl(el)].title = val;
+				this.todos[this.getIndexFromElement(element)].title = val;
 			}
 
 			this.render();
 		},
-		destroy: function (e) {
-			this.todos.splice(this.getIndexFromEl(e.target), 1);
+		destroy: function (event) {
+			this.todos.splice(this.getIndexFromElement(event.target), 1);
 			this.render();
 		}
 	};
