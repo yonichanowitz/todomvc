@@ -1,5 +1,5 @@
 /*global jQuery, Handlebars, Router */
-jQuery(function ($) {
+GordonStuff(function (GS) {
 	'use strict';
 
 	Handlebars.registerHelper('eq', function (a, b, options) {
@@ -41,8 +41,8 @@ jQuery(function ($) {
 	var App = {
 		init: function () {
 			this.todos = util.store('todos-jquery');
-			this.todoTemplate = Handlebars.compile($('#todo-template').html());
-			this.footerTemplate = Handlebars.compile($('#footer-template').html());
+			this.todoTemplate = Handlebars.compile(GS('#todo-template').html());
+			this.footerTemplate = Handlebars.compile(GS('#footer-template').html());
 			this.bindEvents();
 
 			new Router({
@@ -53,10 +53,10 @@ jQuery(function ($) {
 			}).init('/all');
 		},
 		bindEvents: function () {
-			$('#new-todo').on('keyup', this.create.bind(this));
-			$('#toggle-all').on('change', this.toggleAll.bind(this));
-			$('#footer').on('click', '#clear-completed', this.destroyCompleted.bind(this));
-			$('#todo-list')
+			GS('#new-todo').on('keyup', this.create.bind(this));
+			GS('#toggle-all').on('change', this.toggleAll.bind(this));
+			GS('#footer').on('click', '#clear-completed', this.destroyCompleted.bind(this));
+			GS('#todo-list')
 				.on('change', '.toggle', this.toggle.bind(this))
 				.on('dblclick', 'label', this.editingMode.bind(this))
 				.on('keyup', '.edit', this.editKeyup.bind(this))
@@ -65,11 +65,11 @@ jQuery(function ($) {
 		},
 		render: function () {
 			var todos = this.getFilteredTodos();
-			$('#todo-list').html(this.todoTemplate(todos));
-			$('#main').toggle(todos.length > 0);
-			$('#toggle-all').prop('checked', this.getActiveTodos().length === 0);
+			GS('#todo-list').html(this.todoTemplate(todos));
+			GS('#main').toggle(todos.length > 0);
+			GS('#toggle-all').prop('checked', this.getActiveTodos().length === 0);
 			this.renderFooter();
-			$('#new-todo').focus();
+			GS('#new-todo').focus();
 			util.store('todos-jquery', this.todos);
 		},
 		renderFooter: function () {
@@ -82,10 +82,10 @@ jQuery(function ($) {
 				filter: this.filter
 			});
 
-			$('#footer').toggle(todoCount > 0).html(template);
+			GS('#footer').toggle(todoCount > 0).html(template);
 		},
 		toggleAll: function (event) {
-			var isChecked = $(event.target).prop('checked');
+			var isChecked = GS(event.target).prop('checked');
 
 			this.todos.forEach(function (todo) {
 				todo.completed = isChecked;
@@ -122,7 +122,7 @@ jQuery(function ($) {
 		// accepts an element from inside the `.item` div and
 		// returns the corresponding index in the `todos` array
 		getIndexFromElement: function (element) {
-			var id = $(element).closest('li').data('id');
+			var id = GS(element).closest('li').data('id');
 			var todos = this.todos;
 			var i = todos.length;
 
@@ -133,7 +133,7 @@ jQuery(function ($) {
 			}
 		},
 		create: function (event) {
-			var $input = $(event.target);
+			var $input = GS(event.target);
 			var val = $input.val().trim();
 
 			if (event.which !== ENTER_KEY || !val) {
@@ -156,7 +156,7 @@ jQuery(function ($) {
 			this.render();
 		},
 		editingMode: function (event) {
-			var $input = $(event.target).closest('li').addClass('editing').find('.edit');
+			var $input = GS(event.target).closest('li').addClass('editing').find('.edit');
 			var val = $input.val();
 			$input.val('').focus().val(val);
 		},
@@ -166,12 +166,12 @@ jQuery(function ($) {
 			}
 
 			if (event.which === ESCAPE_KEY) {
-				$(event.target).data('abort', true).blur();
+				GS(event.target).data('abort', true).blur();
 			}
 		},
 		update: function (event) {
 			var element = event.target;
-			var $element = $(element);
+			var $element = GS(element);
 			var val = $element.val().trim();
 
 			if (!val) {
