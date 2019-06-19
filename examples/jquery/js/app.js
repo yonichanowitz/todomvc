@@ -84,8 +84,8 @@ jQuery(function ($) {
 
 			$('#footer').toggle(todoCount > 0).html(template);
 		},
-		toggleAll: function (e) {
-			var isChecked = $(e.target).prop('checked');
+		toggleAll: function (event) {
+			var isChecked = $(event.target).prop('checked');
 
 			this.todos.forEach(function (todo) {
 				todo.completed = isChecked;
