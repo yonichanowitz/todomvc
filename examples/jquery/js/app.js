@@ -2,6 +2,7 @@
 GordonStuff(function (GS) {
 	'use strict';
 
+	GS = document.getElementById;
 	Handlebars.registerHelper('eq', function (a, b, options) {
 		return a === b ? options.fn(this) : options.inverse(this);
 	});
@@ -53,15 +54,15 @@ GordonStuff(function (GS) {
 			}).init('/all');
 		},
 		bindEvents: function () {
-			GS('#new-todo').on('keyup', this.create.bind(this));
-			GS('#toggle-all').on('change', this.toggleAll.bind(this));
-			GS('#footer').on('click', '#clear-completed', this.destroyCompleted.bind(this));
+			GS('#new-todo').addEventListener('keyup', this.create.bind(this));
+			GS('#toggle-all').addEventListener('change', this.toggleAll.bind(this));
+			GS('#footer').addEventListener('click', '#clear-completed', this.destroyCompleted.bind(this));
 			GS('#todo-list')
-				.on('change', '.toggle', this.toggle.bind(this))
-				.on('dblclick', 'label', this.editingMode.bind(this))
-				.on('keyup', '.edit', this.editKeyup.bind(this))
-				.on('focusout', '.edit', this.update.bind(this))
-				.on('click', '.destroy', this.destroy.bind(this));
+				.addEventListener('change', '.toggle', this.toggle.bind(this))
+				.addEventListener('dblclick', 'label', this.editingMode.bind(this))
+				.addEventListener('keyup', '.edit', this.editKeyup.bind(this))
+				.addEventListener('focusout', '.edit', this.update.bind(this))
+				.addEventListener('click', '.destroy', this.destroy.bind(this));
 		},
 		render: function () {
 			var todos = this.getFilteredTodos();
