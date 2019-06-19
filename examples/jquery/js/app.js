@@ -179,8 +179,8 @@ jQuery(function ($) {
 				return;
 			}
 
-			if ($ellement.data('abort')) {
-				$ellement.data('abort', false);
+			if ($element.data('abort')) {
+				$element.data('abort', false);
 			} else {
 				this.todos[this.getIndexFromElement(element)].title = val;
 			}
